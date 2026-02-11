@@ -171,6 +171,18 @@
                 }
             };
 
+            const handleBack = () => {
+                if (questionIdx > 0) {
+                    setQuestionIdx(v => v - 1);
+                } else if (pillarIdx > 0) {
+                    const prevPillarIdx = pillarIdx - 1;
+                    setPillarIdx(prevPillarIdx);
+                    setQuestionIdx(PILLARS[pillarKeys[prevPillarIdx]].questions.length - 1);
+                } else {
+                    setStep('welcome');
+                }
+            };
+
             const calculateResults = (finalAnswers) => {
                 setStep('submitting');
                 const scores = pillarKeys.map(key => {
@@ -205,7 +217,7 @@
                                         Business<br/>Efficiency Audit
                                     </h1>
                                     <p className="text-slate-400 text-lg md:text-xl font-medium max-w-md mx-auto">
-                                        Diagnose the "Ant Work" bottlenecks preventing your business from reaching true scale.
+                                        Diagnose the bottlenecks preventing your business from reaching true scale.
                                     </p>
                                 </div>
                                 <button 
@@ -249,6 +261,18 @@
                                             <span className="text-slate-300 group-hover:text-white font-medium text-lg leading-snug">{opt.text}</span>
                                         </button>
                                     ))}
+                                </div>
+                                
+                                <div className="flex justify-between items-center pt-8 border-t border-white/5">
+                                    <button 
+                                        onClick={handleBack}
+                                        className="text-[10px] uppercase font-black text-slate-500 tracking-widest hover:text-white transition-colors flex items-center gap-2 px-2 py-1"
+                                    >
+                                        ← Back
+                                    </button>
+                                    <div className="text-[10px] uppercase font-black text-slate-700 tracking-[0.2em]">
+                                        {Math.round((Object.keys(answers).length / 15) * 100)}% Complete
+                                    </div>
                                 </div>
                             </div>
                         )}
@@ -295,7 +319,7 @@
                                     <div className="space-y-4">
                                         <h3 className="text-3xl font-black uppercase tracking-tighter leading-none italic">Book Your Efficiency Audit</h3>
                                         <p className="text-slate-700 font-medium text-lg leading-snug">
-                                            We'll deep-dive into your <strong>{results.blocker}</strong> and build a custom architecture plan to remove you as the bottleneck.
+                                            We'll deep-dive into your <strong>{results.blocker}</strong> and build a custom architecture plan to make your business more efficient. Save time and money, and give you more room to grow.
                                         </p>
                                     </div>
                                     <div className="grid gap-4">
@@ -310,7 +334,7 @@
                                         target="_blank"
                                         className="block w-full bg-black hover:bg-slate-800 text-white text-center py-6 rounded-3xl font-black uppercase tracking-widest transition-all shadow-xl active:scale-95 no-underline"
                                     >
-                                        Schedule Consultancy Session
+                                        Book An Audit Session
                                     </a>
                                     <p className="text-[10px] text-center text-slate-500 font-black uppercase tracking-widest">
                                         No-Pitch Strategic Audit • 30 Minutes
